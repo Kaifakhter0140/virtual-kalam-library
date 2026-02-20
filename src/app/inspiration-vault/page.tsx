@@ -20,7 +20,7 @@ export default function InspirationVault() {
   const [isLoading, setIsLoading] = useState(false);
 
   // 🎥 THE CAMERA FOCUS: Invisible anchor for auto-scrolling
-  const responseEndRef = useRef(null);
+const responseEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { setMounted(true); }, []);
 
