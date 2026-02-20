@@ -446,7 +446,7 @@ export default function Architect() {
           })
         }
 
-        const options = {
+        const options: any = {
           physics: { enabled: true, forceAtlas2Based: { gravitationalConstant: -100, springLength: 100 } },
           nodes: { shape: 'dot', font: { face: 'Inter' } },
           edges: { color: '#444444', smooth: { type: 'continuous' } },
