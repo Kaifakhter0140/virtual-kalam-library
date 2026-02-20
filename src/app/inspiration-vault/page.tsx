@@ -11,7 +11,7 @@ const INSPIRING_BOOKS = [
 ];
 
 export default function InspirationVault() {
-  const [selectedBook, setSelectedBook] = useState(null);
+  const [selectedBook, setSelectedBook] = useState<any | null>(null);
   const [isAiOpen, setIsAiOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   
