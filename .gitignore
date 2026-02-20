@@ -43,6 +43,7 @@ next-env.d.ts
 node_modules/
 .next/
 
+
 # Python / Backend
 kalam_ai_backend/venv/
 kalam_ai_backend/__pycache__/
@@ -50,3 +51,5 @@ kalam_ai_backend/db_*/
 
 # Security (CRITICAL)
 .env
+
+kalam-ai-brain/

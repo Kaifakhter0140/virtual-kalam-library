@@ -42,7 +42,7 @@ export default function InspirationVault() {
     setAiResponse("");
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/ask_ai', {
+      const response = await fetch('https://kaifakhter0140-kalam-ai-brain.hf.space/ask_ai', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
