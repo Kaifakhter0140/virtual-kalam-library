@@ -37,7 +37,7 @@ const responseEndRef = useRef<HTMLDivElement>(null);
   }, [aiResponse, isLoading, isAiOpen]);
 
   const handleAiInquiry = async () => {
-    if (!userQuery || isLoading) return;
+   if (!userQuery || isLoading || !selectedBook) return;
     setIsLoading(true);
     setAiResponse("");
 
