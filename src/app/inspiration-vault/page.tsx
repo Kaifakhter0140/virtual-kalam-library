@@ -19,8 +19,7 @@ export default function InspirationVault() {
   const [aiResponse, setAiResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // 🎥 THE CAMERA FOCUS: Invisible anchor for auto-scrolling
-const responseEndRef = useRef<HTMLDivElement>(null);
+  const responseEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -29,7 +28,6 @@ const responseEndRef = useRef<HTMLDivElement>(null);
     else document.body.style.overflow = 'unset';
   }, [selectedBook]);
 
-  // 🎬 THE AUTO-PAN: Smoothly scrolls to the bottom of the response box
   useEffect(() => {
     if (isAiOpen && responseEndRef.current) {
       responseEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -37,12 +35,15 @@ const responseEndRef = useRef<HTMLDivElement>(null);
   }, [aiResponse, isLoading, isAiOpen]);
 
   const handleAiInquiry = async () => {
-   if (!userQuery || isLoading || !selectedBook) return;
+    if (!userQuery || isLoading || !selectedBook) return;
     setIsLoading(true);
     setAiResponse("");
 
     try {
-      const response = await fetch('https://kaifakhter0140-kalam-ai-brain.hf.space/ask_ai', {
+      // ✅ USING ENV VARIABLE FOR PRODUCTION STABILITY
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://kaifakhter0140-kalam-ai-brain.hf.space';
+      
+      const response = await fetch(`${apiUrl}/ask_ai`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -57,7 +58,7 @@ const responseEndRef = useRef<HTMLDivElement>(null);
       setAiResponse(data.answer);
       setUserQuery("");
     } catch (error) {
-      setAiResponse("CONNECTION_ERROR: Check if Python Terminal shows Uvicorn running on 127.0.0.1:8000.");
+      setAiResponse("SYSTEM_ERROR: Unable to reach the AI Neural Link. Please ensure the Hugging Face Space is 'Running'.");
     } finally {
       setIsLoading(false);
     }
@@ -120,7 +121,7 @@ const responseEndRef = useRef<HTMLDivElement>(null);
               <div className={`transition-all duration-700 h-full ${isAiOpen ? 'w-full md:w-2/3 border-r border-white/5' : 'w-full'}`}>
                 <div className="w-full h-full bg-zinc-900 flex items-center justify-center relative">
                    <object data={`${selectedBook.pdfUrl}#toolbar=0`} type="application/pdf" className="w-full h-full">
-                     <p className="text-white uppercase font-black italic">PDF Missing: public{selectedBook.pdfUrl}</p>
+                     <p className="text-white uppercase font-black italic text-center px-10">PDF Sync in Progress... <br/> Ensure books are uploaded to Hugging Face LFS.</p>
                    </object>
                 </div>
               </div>
@@ -129,13 +130,11 @@ const responseEndRef = useRef<HTMLDivElement>(null);
               {isAiOpen && (
                 <div className="w-full md:w-1/3 h-full bg-white text-black p-4 md:p-6 flex flex-col">
                   
-                  {/* 1. TOP HEADER (Ultra-squeezed to one line, smaller font) */}
                   <div className="flex items-center justify-between shrink-0 pb-3 border-b border-black/5">
                     <h4 className="text-xl font-black italic uppercase tracking-tighter">kalamHUBAI</h4>
                     <span className="text-[7px] font-black uppercase tracking-widest bg-yellow-500 text-black px-2 py-1 rounded-full">Interface_v1.0</span>
                   </div>
 
-                  {/* 2. MIDDLE RESPONSE AREA (Massive expanded area) */}
                   <div className="flex-1 overflow-y-auto py-3 pr-1 custom-scrollbar">
                     <div className="p-5 bg-zinc-100 rounded-[1.5rem] min-h-full flex flex-col border border-black/5">
                        <p className="text-[9px] font-black text-yellow-600 uppercase tracking-widest italic mb-2 shrink-0">//_Response</p>
@@ -143,7 +142,7 @@ const responseEndRef = useRef<HTMLDivElement>(null);
                        {isLoading ? (
                          <div className="flex-1 flex flex-col items-center justify-center space-y-3">
                             <div className="w-6 h-6 border-4 border-yellow-500/20 border-t-yellow-500 rounded-full animate-spin" />
-                            <p className="text-[8px] font-black uppercase animate-pulse">Scanning...</p>
+                            <p className="text-[8px] font-black uppercase animate-pulse">Scanning Archive...</p>
                          </div>
                        ) : (
                          <p className="text-xs font-bold uppercase italic leading-relaxed text-zinc-800 whitespace-pre-wrap flex-1">
@@ -151,12 +150,10 @@ const responseEndRef = useRef<HTMLDivElement>(null);
                          </p>
                        )}
                        
-                       {/* INVISIBLE ANCHOR FOR SCROLLING */}
                        <div ref={responseEndRef} className="mt-2" />
                     </div>
                   </div>
 
-                  {/* 3. BOTTOM INPUT BAR (Ultra-thin and sleek) */}
                   <div className="shrink-0 pt-3 border-t border-black/5 mt-auto">
                      <input 
                       type="text" 
@@ -168,7 +165,7 @@ const responseEndRef = useRef<HTMLDivElement>(null);
                       className="w-full bg-zinc-100 px-4 py-2.5 rounded-full border-none outline-none font-bold uppercase text-[10px] focus:ring-2 ring-yellow-500 transition-all italic shadow-inner"
                      />
                      <p className="text-[6px] font-black text-zinc-400 mt-1.5 text-center uppercase tracking-widest">
-                       RAG: HUGGINGFACE + CHROMADB + GEMINI-2.5
+                       RAG: HUGGINGFACE + CHROMADB + GEMINI-1.5
                      </p>
                   </div>
 
