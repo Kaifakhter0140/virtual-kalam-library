@@ -57,7 +57,8 @@ export default function InspirationVault() {
       setAiResponse(data.answer);
       setUserQuery("");
     } catch (error) {
-      setAiResponse("SYSTEM_ERROR: AI Neural Link unreachable. Ensure the Space is 'Running'.");
+      // ✅ FIX: Removed local dev error message. It now correctly identifies production link issues.
+      setAiResponse("SYSTEM_ERROR: AI Neural Link unreachable. Ensure the Hugging Face Space is 'Running'.");
     } finally {
       setIsLoading(false);
     }
@@ -115,7 +116,6 @@ export default function InspirationVault() {
             <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
               <div className={`transition-all duration-700 h-full ${isAiOpen ? 'w-full md:w-2/3 border-r border-white/5' : 'w-full'}`}>
                 <div className="w-full h-full bg-zinc-900 flex items-center justify-center relative">
-                   {/* Sync PDF path with Local Public Folder */}
                    <object data={`/books/${selectedBook.pdfUrl}#toolbar=0`} type="application/pdf" className="w-full h-full">
                      <p className="text-white uppercase font-black italic text-center px-10">Syncing Book... <br/> Ensure PDF is in public/books/ folder.</p>
                    </object>
