@@ -3,11 +3,51 @@
 import { useState, useEffect, useRef } from 'react'
 
 const INSPIRING_BOOKS = [
-  { id: 1, title: "Wings of Fire", author: "APJ Abdul Kalam", purpose: "Self-belief & National Vision", lesson: "Dreams are not what you see in sleep, but what keeps you awake.", category: "Autobiography", pdfUrl: "/books/wings_of_fire.pdf" },
-  { id: 2, title: "The Alchemist", author: "Paulo Coelho", purpose: "Finding Personal Legend", lesson: "When you want something, the universe conspires to help you.", category: "Fiction", pdfUrl: "/books/the_alchemist.pdf" },
-  { id: 3, title: "Atomic Habits", author: "James Clear", purpose: "Systemic Growth", lesson: "Small 1% changes lead to massive long-term results.", category: "Self-Help", pdfUrl: "/books/atomic_habits.pdf" },
-  { id: 4, title: "Man's Search for Meaning", author: "Viktor Frankl", purpose: "Resilience in Suffering", lesson: "He who has a why to live can bear almost any how.", category: "Psychology", pdfUrl: "/books/mans_search.pdf" },
-  { id: 5, title: "Ignited Minds", author: "APJ Abdul Kalam", purpose: "Youth Empowerment", lesson: "The resource of the youth is the most powerful on earth.", category: "Philosophy", pdfUrl: "/books/ignited_minds.pdf" }
+  { 
+    id: 1, 
+    title: "Wings of Fire", 
+    author: "APJ Abdul Kalam", 
+    purpose: "Self-belief & National Vision", 
+    lesson: "Dreams are not what you see in sleep, but what keeps you awake.", 
+    category: "Autobiography", 
+    pdfUrl: "wings_of_fire.pdf" 
+  },
+  { 
+    id: 2, 
+    title: "The Alchemist", 
+    author: "Paulo Coelho", 
+    purpose: "Finding Personal Legend", 
+    lesson: "When you want something, the universe conspires to help you.", 
+    category: "Fiction", 
+    pdfUrl: "the_alchemist.pdf" 
+  },
+  { 
+    id: 3, 
+    title: "Atomic Habits", 
+    author: "James Clear", 
+    purpose: "Systemic Growth", 
+    lesson: "Small 1% changes lead to massive long-term results.", 
+    category: "Self-Help", 
+    pdfUrl: "atomic_habits.pdf" 
+  },
+  { 
+    id: 4, 
+    title: "Man's Search for Meaning", 
+    author: "Viktor Frankl", 
+    purpose: "Resilience in Suffering", 
+    lesson: "He who has a why to live can bear almost any how.", 
+    category: "Psychology", 
+    pdfUrl: "man's_search_for_meaning.pdf" 
+  },
+  { 
+    id: 5, 
+    title: "Ignited Minds", 
+    author: "APJ Abdul Kalam", 
+    purpose: "Youth Empowerment", 
+    lesson: "The resource of the youth is the most powerful on earth.", 
+    category: "Philosophy", 
+    pdfUrl: "ignited_minds.pdf" 
+  }
 ];
 
 export default function InspirationVault() {
@@ -40,7 +80,6 @@ export default function InspirationVault() {
     setAiResponse("");
 
     try {
-      // ✅ USING ENV VARIABLE FOR PRODUCTION STABILITY
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://kaifakhter0140-kalam-ai-brain.hf.space';
       
       const response = await fetch(`${apiUrl}/ask_ai`, {
@@ -58,7 +97,7 @@ export default function InspirationVault() {
       setAiResponse(data.answer);
       setUserQuery("");
     } catch (error) {
-      setAiResponse("SYSTEM_ERROR: Unable to reach the AI Neural Link. Please ensure the Hugging Face Space is 'Running'.");
+      setAiResponse("SYSTEM_ERROR: Unable to reach the AI Neural Link. Ensure Hugging Face Space is 'Running'.");
     } finally {
       setIsLoading(false);
     }
@@ -69,7 +108,7 @@ export default function InspirationVault() {
   return (
     <main className="min-h-screen bg-[#020202] text-white p-8 md:p-24 font-sans overflow-x-hidden">
       
-      {/* BACKGROUND ARCHIVE VIBE */}
+      {/* BACKGROUND DECORATION */}
       <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0 grayscale">
          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
          <img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/A._P._J._Abdul_Kalam.jpg" className="absolute right-0 bottom-0 h-full brightness-[0.2]" alt="Kalam" />
@@ -117,16 +156,15 @@ export default function InspirationVault() {
             </div>
 
             <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
-              {/* PDF Viewer */}
               <div className={`transition-all duration-700 h-full ${isAiOpen ? 'w-full md:w-2/3 border-r border-white/5' : 'w-full'}`}>
                 <div className="w-full h-full bg-zinc-900 flex items-center justify-center relative">
-                   <object data={`${selectedBook.pdfUrl}#toolbar=0`} type="application/pdf" className="w-full h-full">
-                     <p className="text-white uppercase font-black italic text-center px-10">PDF Sync in Progress... <br/> Ensure books are uploaded to Hugging Face LFS.</p>
+                   {/* Ensure your PDFs are in your public/ folder locally for this to work */}
+                   <object data={`/books/${selectedBook.pdfUrl}#toolbar=0`} type="application/pdf" className="w-full h-full">
+                     <p className="text-white uppercase font-black italic text-center px-10">PDF Sync in Progress... <br/> Ensure books are in your public/books folder.</p>
                    </object>
                 </div>
               </div>
 
-              {/* AI Assistant Panel */}
               {isAiOpen && (
                 <div className="w-full md:w-1/3 h-full bg-white text-black p-4 md:p-6 flex flex-col">
                   
