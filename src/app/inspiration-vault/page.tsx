@@ -108,7 +108,6 @@ export default function InspirationVault() {
   return (
     <main className="min-h-screen bg-[#020202] text-white p-8 md:p-24 font-sans overflow-x-hidden">
       
-      {/* BACKGROUND DECORATION */}
       <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0 grayscale">
          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
          <img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/A._P._J._Abdul_Kalam.jpg" className="absolute right-0 bottom-0 h-full brightness-[0.2]" alt="Kalam" />
@@ -158,7 +157,7 @@ export default function InspirationVault() {
             <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
               <div className={`transition-all duration-700 h-full ${isAiOpen ? 'w-full md:w-2/3 border-r border-white/5' : 'w-full'}`}>
                 <div className="w-full h-full bg-zinc-900 flex items-center justify-center relative">
-                   {/* Ensure your PDFs are in your public/ folder locally for this to work */}
+                   {/* Local PDF viewing expects files in public/books/ */}
                    <object data={`/books/${selectedBook.pdfUrl}#toolbar=0`} type="application/pdf" className="w-full h-full">
                      <p className="text-white uppercase font-black italic text-center px-10">PDF Sync in Progress... <br/> Ensure books are in your public/books folder.</p>
                    </object>
@@ -167,7 +166,6 @@ export default function InspirationVault() {
 
               {isAiOpen && (
                 <div className="w-full md:w-1/3 h-full bg-white text-black p-4 md:p-6 flex flex-col">
-                  
                   <div className="flex items-center justify-between shrink-0 pb-3 border-b border-black/5">
                     <h4 className="text-xl font-black italic uppercase tracking-tighter">kalamHUBAI</h4>
                     <span className="text-[7px] font-black uppercase tracking-widest bg-yellow-500 text-black px-2 py-1 rounded-full">Interface_v1.0</span>
@@ -176,7 +174,6 @@ export default function InspirationVault() {
                   <div className="flex-1 overflow-y-auto py-3 pr-1 custom-scrollbar">
                     <div className="p-5 bg-zinc-100 rounded-[1.5rem] min-h-full flex flex-col border border-black/5">
                        <p className="text-[9px] font-black text-yellow-600 uppercase tracking-widest italic mb-2 shrink-0">//_Response</p>
-                       
                        {isLoading ? (
                          <div className="flex-1 flex flex-col items-center justify-center space-y-3">
                             <div className="w-6 h-6 border-4 border-yellow-500/20 border-t-yellow-500 rounded-full animate-spin" />
@@ -187,7 +184,6 @@ export default function InspirationVault() {
                            {aiResponse || "What would you like to ask about this book?"}
                          </p>
                        )}
-                       
                        <div ref={responseEndRef} className="mt-2" />
                     </div>
                   </div>
@@ -206,7 +202,6 @@ export default function InspirationVault() {
                        RAG: HUGGINGFACE + CHROMADB + GEMINI-1.5
                      </p>
                   </div>
-
                 </div>
               )}
             </div>
