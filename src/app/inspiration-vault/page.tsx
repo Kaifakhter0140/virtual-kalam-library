@@ -3,51 +3,11 @@
 import { useState, useEffect, useRef } from 'react'
 
 const INSPIRING_BOOKS = [
-  { 
-    id: 1, 
-    title: "Wings of Fire", 
-    author: "APJ Abdul Kalam", 
-    purpose: "Self-belief & National Vision", 
-    lesson: "Dreams are not what you see in sleep, but what keeps you awake.", 
-    category: "Autobiography", 
-    pdfUrl: "wings_of_fire.pdf" 
-  },
-  { 
-    id: 2, 
-    title: "The Alchemist", 
-    author: "Paulo Coelho", 
-    purpose: "Finding Personal Legend", 
-    lesson: "When you want something, the universe conspires to help you.", 
-    category: "Fiction", 
-    pdfUrl: "the_alchemist.pdf" 
-  },
-  { 
-    id: 3, 
-    title: "Atomic Habits", 
-    author: "James Clear", 
-    purpose: "Systemic Growth", 
-    lesson: "Small 1% changes lead to massive long-term results.", 
-    category: "Self-Help", 
-    pdfUrl: "atomic_habits.pdf" 
-  },
-  { 
-    id: 4, 
-    title: "Man's Search for Meaning", 
-    author: "Viktor Frankl", 
-    purpose: "Resilience in Suffering", 
-    lesson: "He who has a why to live can bear almost any how.", 
-    category: "Psychology", 
-    pdfUrl: "man's_search_for_meaning.pdf" 
-  },
-  { 
-    id: 5, 
-    title: "Ignited Minds", 
-    author: "APJ Abdul Kalam", 
-    purpose: "Youth Empowerment", 
-    lesson: "The resource of the youth is the most powerful on earth.", 
-    category: "Philosophy", 
-    pdfUrl: "ignited_minds.pdf" 
-  }
+  { id: 1, title: "Wings of Fire", author: "APJ Abdul Kalam", purpose: "Self-belief & National Vision", lesson: "Dreams are not what you see in sleep, but what keeps you awake.", category: "Autobiography", pdfUrl: "wings_of_fire.pdf" },
+  { id: 2, title: "The Alchemist", author: "Paulo Coelho", purpose: "Finding Personal Legend", lesson: "When you want something, the universe conspires to help you.", category: "Fiction", pdfUrl: "the_alchemist.pdf" },
+  { id: 3, title: "Atomic Habits", author: "James Clear", purpose: "Systemic Growth", lesson: "Small 1% changes lead to massive long-term results.", category: "Self-Help", pdfUrl: "atomic_habits.pdf" },
+  { id: 4, title: "Man's Search for Meaning", author: "Viktor Frankl", purpose: "Resilience in Suffering", lesson: "He who has a why to live can bear almost any how.", category: "Psychology", pdfUrl: "man's_search_for_meaning.pdf" },
+  { id: 5, title: "Ignited Minds", author: "APJ Abdul Kalam", purpose: "Youth Empowerment", lesson: "The resource of the youth is the most powerful on earth.", category: "Philosophy", pdfUrl: "ignited_minds.pdf" }
 ];
 
 export default function InspirationVault() {
@@ -97,7 +57,7 @@ export default function InspirationVault() {
       setAiResponse(data.answer);
       setUserQuery("");
     } catch (error) {
-      setAiResponse("SYSTEM_ERROR: Unable to reach the AI Neural Link. Ensure Hugging Face Space is 'Running'.");
+      setAiResponse("SYSTEM_ERROR: AI Neural Link unreachable. Ensure the Space is 'Running'.");
     } finally {
       setIsLoading(false);
     }
@@ -107,7 +67,6 @@ export default function InspirationVault() {
 
   return (
     <main className="min-h-screen bg-[#020202] text-white p-8 md:p-24 font-sans overflow-x-hidden">
-      
       <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0 grayscale">
          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
          <img src="https://upload.wikimedia.org/wikipedia/commons/b/bd/A._P._J._Abdul_Kalam.jpg" className="absolute right-0 bottom-0 h-full brightness-[0.2]" alt="Kalam" />
@@ -140,7 +99,6 @@ export default function InspirationVault() {
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-10">
           <div className="absolute inset-0 bg-black/95 backdrop-blur-3xl" onClick={() => {setSelectedBook(null); setAiResponse("");}} />
           <div className="relative w-full h-full max-w-7xl bg-[#080808] border border-white/10 rounded-none md:rounded-[4rem] overflow-hidden flex flex-col">
-            
             <div className="flex justify-between items-center p-8 md:p-12 border-b border-white/5 shrink-0">
               <div className="space-y-1">
                 <h3 className="text-3xl font-black italic uppercase text-white">{selectedBook.title}</h3>
@@ -157,9 +115,9 @@ export default function InspirationVault() {
             <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
               <div className={`transition-all duration-700 h-full ${isAiOpen ? 'w-full md:w-2/3 border-r border-white/5' : 'w-full'}`}>
                 <div className="w-full h-full bg-zinc-900 flex items-center justify-center relative">
-                   {/* Local PDF viewing expects files in public/books/ */}
+                   {/* Sync PDF path with Local Public Folder */}
                    <object data={`/books/${selectedBook.pdfUrl}#toolbar=0`} type="application/pdf" className="w-full h-full">
-                     <p className="text-white uppercase font-black italic text-center px-10">PDF Sync in Progress... <br/> Ensure books are in your public/books folder.</p>
+                     <p className="text-white uppercase font-black italic text-center px-10">Syncing Book... <br/> Ensure PDF is in public/books/ folder.</p>
                    </object>
                 </div>
               </div>
